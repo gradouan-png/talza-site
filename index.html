@@ -191,6 +191,17 @@ mark{background:linear-gradient(transparent 58%,var(--jaune) 58%);color:inherit;
 footer{background:var(--nuit);color:var(--blanc);font-size:.84rem}
 footer .dans{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem 1.5rem;padding-block:1.4rem;opacity:.8}
 .appel{display:flex;justify-content:flex-start}
+dialog#contact{border:0;border-radius:26px;padding:1.6rem 1.5rem 1.5rem;width:min(26rem,calc(100vw - 32px));background:var(--blanc);color:var(--encre);box-shadow:0 30px 80px -20px rgba(10,4,40,.7)}
+dialog#contact[open]{display:grid;gap:.9rem}
+dialog#contact::backdrop{background:rgba(22,11,51,.6);backdrop-filter:blur(3px)}
+dialog#contact h3{font-size:1.25rem;padding-right:2rem}
+dialog#contact p{color:var(--doux);font-size:.97rem}
+dialog#contact .bouton{text-align:center}
+.bouton.clair{background:var(--lilas);color:var(--encre)}
+.fermer{position:absolute;top:.8rem;right:.9rem;width:2.2rem;height:2.2rem;border-radius:50%;border:0;background:var(--lilas);color:var(--encre);font-size:1.3rem;line-height:1;cursor:pointer}
+.adresse-copie{display:flex;align-items:center;justify-content:space-between;gap:.6rem;background:var(--lilas);border-radius:14px;padding:.55rem .6rem .55rem 1rem;font-weight:600}
+.adresse-copie span{user-select:all;min-width:0;overflow-wrap:anywhere}
+.adresse-copie button{border:0;border-radius:99px;background:var(--nuit);color:var(--blanc);font:600 .85rem var(--corps);padding:.5rem .9rem;cursor:pointer}
 .barre-mobile{display:none}
 .glisse{display:none}
 
@@ -317,7 +328,6 @@ footer .dans{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem
             <div class="tache"><b>Semaine 4</b>Le bilan du mois</div>
           </div>
         </div>
-        <span class="puce note p2">Exemple d'audit</span>
       </div>
     </div>
   </div>
@@ -455,6 +465,31 @@ footer .dans{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.5rem
 </div>
 
 <div class="barre-mobile"><a class="bouton" href="mailto:gauthier@talza.io?subject=Mon%20%40%20TikTok%20pour%20un%20audit">Envoyer mon @ TikTok</a></div>
+
+<dialog id="contact" aria-labelledby="contact-titre">
+  <button class="fermer" type="button" aria-label="Fermer" data-fermer>×</button>
+  <h3 id="contact-titre">Envoie-nous ton @ TikTok</h3>
+  <p>Écris-nous ton @ par mail. On te répond avec le tarif, avant tout engagement.</p>
+  <div class="adresse-copie"><span id="adresse">gauthier@talza.io</span><button type="button" id="copier">Copier</button></div>
+  <a class="bouton violet" target="_blank" rel="noopener" href="https://mail.google.com/mail/?view=cm&fs=1&to=gauthier@talza.io&su=Mon%20%40%20TikTok%20pour%20un%20audit">Écrire depuis Gmail</a>
+  <a class="bouton clair" href="mailto:gauthier@talza.io?subject=Mon%20%40%20TikTok%20pour%20un%20audit">Ouvrir mon appli mail</a>
+</dialog>
+<script>
+(function(){
+  var d=document.getElementById('contact'); if(!d||!d.showModal) return;
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[href^="mailto:"]');
+    if(a&&!d.contains(a)){e.preventDefault();d.showModal();return;}
+    if(e.target.closest('[data-fermer]')||e.target===d) d.close();
+  });
+  var c=document.getElementById('copier'),t=document.getElementById('adresse');
+  c.addEventListener('click',function(){
+    var ok=function(){c.textContent='Copié';setTimeout(function(){c.textContent='Copier'},1800)};
+    var sel=function(){var r=document.createRange();r.selectNodeContents(t);var s=getSelection();s.removeAllRanges();s.addRange(r)};
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t.textContent).then(ok,sel)}else{sel()}
+  });
+})();
+</script>
 
 <footer class="bande">
   <div class="dans">
