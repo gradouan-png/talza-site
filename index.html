@@ -114,6 +114,7 @@ mark{background:linear-gradient(transparent 58%,var(--jaune) 58%);color:inherit;
 .bloc .dans{display:grid;gap:2.2rem}
 .lilas{background:var(--lilas)}
 .offre{margin:1rem 0 0;font-size:.95rem;line-height:1.5}
+.offre .public{display:block;opacity:.85}
 .offre .dispo{display:block;font-weight:600}
 .complet{opacity:.55;pointer-events:none}
 .offre .chrono{display:block;font-variant-numeric:tabular-nums;font-weight:600;opacity:.85}
@@ -309,7 +310,7 @@ dialog#contact .bouton{text-align:center}
           <a class="bouton" href="https://talza-commande.onrender.com/commander" data-achat>Commander mon audit · 19 €</a>
           <a class="lien-exemple" href="exemple/">ou voir un exemple d'audit</a>
           </div>
-        <p class="offre" data-offre><b>Prix de lancement : 19 €</b> pour les 20 premiers audits, jusqu'au dimanche 29 novembre inclus. Ensuite 49 €.<span class="chrono" data-chrono></span><span class="dispo" data-dispo>Au plus 5 audits par jour, pour garder la qualité.</span></p>
+        <p class="offre" data-offre><b>Prix de lancement : 19 €</b> pour les 20 premiers audits, jusqu'au dimanche 29 novembre inclus. Ensuite 49 €.<span class="chrono" data-chrono></span><span class="public">Ton compte TikTok doit être public : on ne lit que ce que tout le monde voit.</span><span class="dispo" data-dispo>Au plus 5 audits par jour, pour garder la qualité.</span></p>
       </div>
       <div class="eventail" aria-hidden="true">
         <div class="tel app t1">
@@ -475,7 +476,7 @@ dialog#contact .bouton{text-align:center}
   <div class="dans">
     <div class="intro"><h2>Comment ça se passe</h2></div>
     <ol class="etapes">
-      <li><b>Tu commandes en ligne</b><span>Paiement sécurisé par Stripe : tu y donnes ton @ TikTok, et tu reçois ta facture par mail. Prix de lancement : 19 € pour les 20 premiers audits, jusqu'au dimanche 29 novembre inclus. Ensuite 49 €. Pour que chaque audit reste fait avec soin, on en prend un nombre limité.</span></li>
+      <li><b>Tu commandes en ligne</b><span>Paiement sécurisé par Stripe : tu y donnes ton @ TikTok (ton compte doit être public), et tu reçois ta facture par mail. Prix de lancement : 19 € pour les 20 premiers audits, jusqu'au dimanche 29 novembre inclus. Ensuite 49 €. Pour que chaque audit reste fait avec soin, on en prend un nombre limité.</span></li>
       <li><b>On lit ta page et tes vidéos</b><span>Tes 15 dernières vidéos et tes épinglées : la première image, le hook, le produit, ta voix, le rythme.</span></li>
       <li><b>Tu reçois ton audit</b><span>Un lien privé, lisible sur ton téléphone, et le PDF.</span></li>
     </ol>
@@ -489,7 +490,7 @@ dialog#contact .bouton{text-align:center}
     <div class="contact">
       <a class="bouton" href="https://talza-commande.onrender.com/commander" data-achat>Commander mon audit · 19 €</a>
     </div>
-    <p class="offre" data-offre><b>Prix de lancement : 19 €</b> pour les 20 premiers audits, jusqu'au dimanche 29 novembre inclus. Ensuite 49 €.<span class="chrono" data-chrono></span><span class="dispo" data-dispo>Au plus 5 audits par jour, pour garder la qualité.</span></p>
+    <p class="offre" data-offre><b>Prix de lancement : 19 €</b> pour les 20 premiers audits, jusqu'au dimanche 29 novembre inclus. Ensuite 49 €.<span class="chrono" data-chrono></span><span class="public">Ton compte TikTok doit être public : on ne lit que ce que tout le monde voit.</span><span class="dispo" data-dispo>Au plus 5 audits par jour, pour garder la qualité.</span></p>
   </div>
 </div>
 
@@ -557,7 +558,7 @@ dialog#contact .bouton{text-align:center}
 <footer class="bande">
   <div class="dans">
     <span>talza, par Grapper Agency · Grapper Enterprises S.L., Calle Calabria 149, 08015 Barcelone, Espagne</span>
-    <span><a href="confidentialite.html">Confidentialité</a> · Aucun cookie</span>
+    <span><a href="conditions/">Conditions de vente</a> · <a href="confidentialite.html">Confidentialité</a> · Aucun cookie</span>
   </div>
 </footer>
 </body>
