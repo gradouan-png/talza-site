@@ -44,6 +44,7 @@ table{border-collapse:collapse;width:100%;font-size:.92rem}
 th,td{text-align:left;vertical-align:top;padding:.55rem .6rem .55rem 0;border-bottom:1px solid var(--filet)}
 th{font-weight:600;color:var(--doux);font-size:.8rem;letter-spacing:.06em;text-transform:uppercase}
 footer{border-top:1px solid var(--filet);padding-top:1rem;font-size:.85rem;color:var(--doux)}
+.recap{background:var(--voile);border:1px solid var(--filet);padding:.9rem 1rem}
 </style>
 
 </head>
@@ -59,11 +60,21 @@ footer{border-top:1px solid var(--filet);padding-top:1rem;font-size:.85rem;color
     <p>Ton paiement est bien passé. Tu reçois dans quelques minutes ton reçu et ta facture par mail, de la part de Stripe.</p>
     <p><b>Ton audit TikTok arrive sous 48 h</b>, à l'adresse mail que tu as donnée au paiement : un lien vers ta page privée, et le PDF.</p>
     <p>Si beaucoup de commandes arrivent le même jour, on te prévient du délai par mail.</p>
+    <p class="recap" data-recap hidden>Ton audit sera fait sur : <b data-tiktok></b>. Ce n'est pas le bon compte, ou il est privé ? Écris-nous tout de suite, avant qu'on commence.</p>
     <p>Une question, un @ mal tapé ? Écris à <a href="mailto:gauthier@talza.io">gauthier@talza.io</a>.</p>
     <p><a href="../">Retour à l'accueil</a></p>
   </main>
 
   <footer>talza, par Grapper Agency · Grapper Enterprises S.L., Calle Calabria 149, 08015 Barcelone, Espagne</footer>
 </div>
+<script>
+/* Récapitulatif (Gauthier, 23/11 10h07) : rattraper un @ valide mais faux avant l'audit. Le service ne renvoie que le @. */
+(function(){
+  var id=new URLSearchParams(location.search).get('commande'); if(!id||!/^cs_[A-Za-z0-9_]+$/.test(id)) return;
+  fetch('https://talza-commande.onrender.com/commande?id='+encodeURIComponent(id),{cache:'no-store'}).then(function(r){ if(!r.ok) throw 0; return r.json(); })
+  .then(function(c){ if(!c.tiktok) return; document.querySelector('[data-tiktok]').textContent=c.tiktok; document.querySelector('[data-recap]').hidden=false; })
+  .catch(function(){});
+})();
+</script>
 </body>
 </html>
