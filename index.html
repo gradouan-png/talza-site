@@ -528,11 +528,14 @@ dialog#contact .bouton{text-align:center}
   /* Source de la visite (pub Meta : talza.io/?ref=meta), suivie jusqu'au paiement. */
   var ref=''; try{ ref=(new URLSearchParams(location.search).get('ref')||'').toLowerCase(); }catch(_){}
   if(!/^[a-z0-9_-]{1,20}$/.test(ref)) ref='';
-  if(ref) boutons.forEach(function(b){ if(b.href.indexOf('/commander')>-1) b.href=SERVICE+'/commander?ref='+ref; });
+  /* Les visites de Gauthier ne comptent pas : ouvrir une fois talza.io/?moi sur chaque appareil (23/11 21h34). */
+  var moi=false; try{ if(/[?&]moi(&|=|$)/.test(location.search)) localStorage.setItem('talza-moi','1'); moi=localStorage.getItem('talza-moi')==='1'; }catch(_){}
+  var suite=[]; if(ref) suite.push('ref='+ref); if(moi) suite.push('moi=1'); suite=suite.length?'?'+suite.join('&'):'';
+  if(suite) boutons.forEach(function(b){ if(b.href.indexOf('/commander')>-1) b.href=SERVICE+'/commander'+suite; });
   function ecrire(txt){ lignes.forEach(function(l){ l.textContent=txt; }); }
   if(location.hash==='#complet') ecrire('Complet pour aujourd\'hui : de nouveaux rapports demain dès minuit.');
   var fini=false, minuterie=setTimeout(function(){ if(!fini) boutons.forEach(function(b){ b.href=SECOURS; }); }, 8000);
-  fetch(SERVICE+'/dispo'+(ref?'?ref='+ref:''),{cache:'no-store'}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(e){
+  fetch(SERVICE+'/dispo'+suite,{cache:'no-store'}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(e){
     fini=true; clearTimeout(minuterie);
     if(e.lancement&&e.places_lancement>0) document.querySelectorAll('[data-places]').forEach(function(p){ p.textContent=' · encore '+e.places_lancement+(e.places_lancement>1?' places':' place'); });
     if(!e.lancement||e.places_lancement===0) document.querySelectorAll('[data-visio]').forEach(function(v){ v.hidden=true; });
