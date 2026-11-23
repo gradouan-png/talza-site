@@ -512,10 +512,14 @@ dialog#contact .bouton{text-align:center}
 (function(){
   var SERVICE='https://talza-commande.onrender.com', SECOURS='https://buy.stripe.com/9B614o1ghdWG9FU3le1Fe00';
   var boutons=document.querySelectorAll('[data-achat]'), lignes=document.querySelectorAll('[data-dispo]');
+  /* Source de la visite (pub Meta : talza.io/?ref=meta), suivie jusqu'au paiement. */
+  var ref=''; try{ ref=(new URLSearchParams(location.search).get('ref')||'').toLowerCase(); }catch(_){}
+  if(!/^[a-z0-9_-]{1,20}$/.test(ref)) ref='';
+  if(ref) boutons.forEach(function(b){ if(b.href.indexOf('/commander')>-1) b.href=SERVICE+'/commander?ref='+ref; });
   function ecrire(txt){ lignes.forEach(function(l){ l.textContent=txt; }); }
   if(location.hash==='#complet') ecrire('Complet pour aujourd\'hui : de nouveaux rapports demain dès minuit.');
   var fini=false, minuterie=setTimeout(function(){ if(!fini) boutons.forEach(function(b){ b.href=SECOURS; }); }, 8000);
-  fetch(SERVICE+'/dispo',{cache:'no-store'}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(e){
+  fetch(SERVICE+'/dispo'+(ref?'?ref='+ref:''),{cache:'no-store'}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(e){
     fini=true; clearTimeout(minuterie);
     if(e.restants>0){ ecrire('Encore '+e.restants+(e.restants>1?' rapports disponibles':' rapport disponible')+' aujourd\'hui.'); return; }
     ecrire(e.lancement&&e.places_lancement===0 ? 'Les 20 rapports au prix de lancement sont partis.' : 'Complet pour aujourd\'hui : de nouveaux rapports demain dès minuit.');
