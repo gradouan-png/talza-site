@@ -114,6 +114,16 @@ mark{background:linear-gradient(transparent 58%,var(--jaune) 58%);color:inherit;
 .bloc .dans{display:grid;gap:2.2rem}
 .lilas{background:var(--lilas)}
 .offre{margin:1rem 0 0;font-size:.95rem;line-height:1.5}
+.visio-offerte{margin:1rem 0 0;border:2px solid #7c5cff;background:#2a1e4d;color:#fff;border-radius:16px;padding:.9rem 1.1rem;max-width:30rem}
+.visio-offerte b{display:block;font-size:1.15rem;font-weight:800}
+.visio-offerte span{display:block;color:#ffe45c;font-weight:700;font-size:.95rem;margin-top:.2rem}
+.visio-offerte em{font-style:normal;color:#fff;font-weight:600}
+.prix-heros{display:flex;align-items:baseline;gap:.9rem;flex-wrap:wrap;margin:.4rem 0 .2rem}
+.prix-heros .p19{font-family:var(--titre);font-weight:800;font-size:clamp(3.4rem,11vw,5rem);line-height:1;color:#ffe45c;letter-spacing:-.03em}
+.prix-heros .p49{font-size:1.05rem;color:rgba(255,255,255,.8)}
+.prix-heros .p49 b{color:#fff;font-size:1.2rem}
+.visio-offerte.grand{margin:.6rem 0 1rem;font-size:1.05rem}
+.visio-offerte.grand b{font-size:1.3rem}
 .offre .public{display:block;opacity:.85}
 .offre .dispo{display:block;font-weight:600}
 .complet{opacity:.55;pointer-events:none}
@@ -307,6 +317,8 @@ dialog#contact .bouton{text-align:center}
         <h1>Fais de ton TikTok la vitrine qui vend ton UGC.</h1>
         <p class="chapo">Avant de te commander une vidéo, une marque ouvre ta page TikTok. C'est ton vrai portfolio, que tu l'aies prévu ou non. On la regarde avec ses yeux, vidéo par vidéo, et on te dit quoi changer en 30 jours pour lui donner envie de travailler avec toi.</p>
         <div class="contact">
+          <div class="prix-heros" data-prixheros><span class="p19">19&nbsp;€</span><span class="p49">prix de lancement · <b>49&nbsp;€ dès le lundi 30/11</b></span></div>
+          <div class="visio-offerte grand" data-visio><b>+ 30 min en visio avec le fondateur</b><span>offertes aux 20 premières commandes<em data-places></em></span></div>
           <a class="bouton" href="https://talza-commande.onrender.com/commander" data-achat>Commander mon rapport · 19 €</a>
           <a class="lien-exemple" href="exemple/">ou voir un exemple de rapport</a>
           </div>
@@ -492,6 +504,7 @@ dialog#contact .bouton{text-align:center}
       <a class="bouton" href="https://talza-commande.onrender.com/commander" data-achat>Commander mon rapport · 19 €</a>
     </div>
     <p class="offre" data-offre><b>Prix de lancement : 19 €</b> pour les 20 premiers rapports, jusqu'au dimanche 29 novembre inclus. Ensuite 49 €. <b>Pour ces 20 premiers, un appel consulting de 30 minutes avec Gauthier est offert</b> pour parler de ton rapport.<span class="chrono" data-chrono></span><span class="public">Ton compte TikTok doit être public : on ne lit que ce que tout le monde voit.</span><span class="dispo" data-dispo>Au plus 5 rapports par jour, pour garder la qualité.</span></p>
+        <div class="visio-offerte" data-visio><b>+ 30 min en visio avec le fondateur</b><span>offertes aux 20 premières commandes<em data-places></em></span></div>
   </div>
 </div>
 
@@ -521,6 +534,8 @@ dialog#contact .bouton{text-align:center}
   var fini=false, minuterie=setTimeout(function(){ if(!fini) boutons.forEach(function(b){ b.href=SECOURS; }); }, 8000);
   fetch(SERVICE+'/dispo'+(ref?'?ref='+ref:''),{cache:'no-store'}).then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(e){
     fini=true; clearTimeout(minuterie);
+    if(e.lancement&&e.places_lancement>0) document.querySelectorAll('[data-places]').forEach(function(p){ p.textContent=' · encore '+e.places_lancement+(e.places_lancement>1?' places':' place'); });
+    if(!e.lancement||e.places_lancement===0) document.querySelectorAll('[data-visio]').forEach(function(v){ v.hidden=true; });
     if(e.restants>0){ ecrire('Encore '+e.restants+(e.restants>1?' rapports disponibles':' rapport disponible')+' aujourd\'hui.'); return; }
     ecrire(e.lancement&&e.places_lancement===0 ? 'Les 20 rapports au prix de lancement sont partis.' : 'Complet pour aujourd\'hui : de nouveaux rapports demain dès minuit.');
     boutons.forEach(function(b){ b.classList.add('complet'); b.setAttribute('aria-disabled','true'); b.textContent=(e.lancement&&e.places_lancement===0)?'Prix de lancement épuisé':'Complet aujourd\'hui · demain dès minuit'; });
@@ -535,6 +550,7 @@ dialog#contact .bouton{text-align:center}
   function maj(){
     var r=fin-Date.now(), els=document.querySelectorAll('[data-offre]');
     if(r<=0){ els.forEach(function(e){ e.innerHTML='<b>49 €</b> le rapport, en PDF et sur une page privée.'; });
+      document.querySelectorAll('[data-prixheros]').forEach(function(x){ x.hidden=true; });
       document.querySelectorAll('[data-achat]:not(.complet)').forEach(function(b){ b.textContent=b.textContent.replace('19 €','49 €'); }); return; }
     var j=Math.floor(r/864e5), h=Math.floor(r%864e5/36e5), m=Math.floor(r%36e5/6e4);
     document.querySelectorAll('[data-chrono]').forEach(function(c){ c.textContent='Encore '+(j?j+' j ':'')+h+' h '+(m<10?'0':'')+m+' min'; });
