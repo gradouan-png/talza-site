@@ -151,14 +151,14 @@ mark{background:linear-gradient(transparent 58%,var(--jaune) 58%);color:inherit;
 .autocollants .code:nth-child(2){transform:rotate(1.8deg);justify-self:end}
 .autocollants .code:nth-child(3){transform:rotate(-1.2deg)}
 .pellicule{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.45rem;padding-top:.4rem}
-.plan{display:grid;gap:.4rem;min-width:0}
+.plan{display:grid;grid-template-rows:auto auto 1fr;align-content:start;gap:.4rem;min-width:0}
 .plan i{display:block;aspect-ratio:9/16;border-radius:12px;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--violet),var(--rose))}
 .plan:nth-child(2) i{background:linear-gradient(160deg,var(--rose),var(--jaune))}
 .plan:nth-child(3) i{background:linear-gradient(200deg,var(--violet-fonce),var(--violet))}
 .plan:nth-child(4) i{background:linear-gradient(160deg,var(--jaune),var(--rose))}
 .plan i::after{content:attr(data-t);position:absolute;left:8%;right:8%;bottom:9%;background:var(--blanc);color:var(--nuit);font:700 .56rem/1.2 var(--corps);font-style:normal;padding:.22rem .25rem;border-radius:5px;text-align:center}
 .plan b{font:700 .72rem/1 var(--corps);font-variant-numeric:tabular-nums;color:var(--jaune)}
-.plan span{font-size:.74rem;line-height:1.3;opacity:.85}
+.plan span{font-size:.74rem;line-height:1.3;opacity:.85;text-align:left;hyphens:auto;overflow-wrap:anywhere}
 .coches{list-style:none;margin:0;padding:.3rem 0 0;display:grid;gap:.75rem}
 .coches li{display:grid;grid-template-columns:1.7rem minmax(0,1fr);gap:.7rem;align-items:start;font-weight:600;font-size:.95rem;line-height:1.35}
 .coches li::before{content:"";width:1.5rem;height:1.5rem;border-radius:50%;border:2.5px solid var(--nuit);margin-top:.05rem}
