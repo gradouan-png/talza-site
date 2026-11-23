@@ -60,7 +60,7 @@ footer{border-top:1px solid var(--filet);padding-top:1rem;font-size:.85rem;color
     <p>Ton paiement est bien passé. Tu reçois dans quelques minutes ton reçu et ta facture par mail, de la part de Stripe.</p>
     <p><b>Ton rapport TikTok arrive sous 48 h</b>, à l'adresse mail que tu as donnée au paiement : un lien vers ta page privée, et le PDF.</p>
     <p>Si beaucoup de commandes arrivent le même jour, on te prévient du délai par mail.</p>
-    <p class="recap" data-recap hidden>Ton rapport portera sur : <b data-tiktok></b>. Ce n'est pas le bon compte, ou il est privé ? Écris-nous tout de suite, avant qu'on commence.</p>
+    <p class="recap" data-recap hidden>Ton rapport portera sur : <b data-tiktok></b><span data-ligne-mail hidden><br>Il sera envoyé à : <b data-email></b></span><br>Ce n'est pas le bon compte, la bonne adresse, ou ton compte est privé ? Écris-nous tout de suite à <a href="mailto:gauthier@talza.io">gauthier@talza.io</a>, avant qu'on commence.</p>
     <p>Une question, un @ mal tapé ? Écris à <a href="mailto:gauthier@talza.io">gauthier@talza.io</a>.</p>
     <p><a href="../">Retour à l'accueil</a></p>
   </main>
@@ -72,7 +72,7 @@ footer{border-top:1px solid var(--filet);padding-top:1rem;font-size:.85rem;color
 (function(){
   var id=new URLSearchParams(location.search).get('commande'); if(!id||!/^cs_[A-Za-z0-9_]+$/.test(id)) return;
   fetch('https://talza-commande.onrender.com/commande?id='+encodeURIComponent(id),{cache:'no-store'}).then(function(r){ if(!r.ok) throw 0; return r.json(); })
-  .then(function(c){ if(!c.tiktok) return; document.querySelector('[data-tiktok]').textContent=c.tiktok; document.querySelector('[data-recap]').hidden=false; })
+  .then(function(c){ if(!c.tiktok) return; document.querySelector('[data-tiktok]').textContent=c.tiktok; if(c.email){ document.querySelector('[data-email]').textContent=c.email; document.querySelector('[data-ligne-mail]').hidden=false; } document.querySelector('[data-recap]').hidden=false; })
   .catch(function(){});
 })();
 </script>
